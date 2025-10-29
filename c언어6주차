@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int num, sell = 0, inven = 0, max, min, name;
+    int in[5] = { 0, }, out[5] = { 0, }, remain[5] = { 0, };
+    int maxIdx = 0, minIdx = 0;
+    char str[5][100];
+    do
+    {
+        printf("[쇼핑몰 관리 프로그램]\n");
+        printf("원하는 메뉴를 선택하세요(1.입고,2.판매,3.상품현황,4.상품명 입력,5.종료): ");
+        scanf("%d", &num);
+        
+        int ip, id, n;
+        switch (num)
+        {
+        case 1:
+            printf("입고수량 입력: 전체 상품 입고수량 입력1, 개별 상품 입력 2를 선택 >> ");
+            scanf("%d", &ip);
+            if(ip == 1){
+                for (int i = 0; i < 5; i++) { 
+                scanf("%d", &in[i]);
+                inven += in[i];
+                remain[i] += in[i];
+                }
+            }
+            if(ip == 2){
+                printf("상품ID: ");
+                scanf("%d",&id);
+                printf("입고수량: ");
+                scanf("%d",&n);
+                in[id-1] += n;
+                inven += n;
+                remain[id-1] += n;
+            }
+            break;
+        case 2:
+            printf("판매수량 입력: 전체 상품 판매수량 입력1, 개별 상품 입력 2를 선택 >> ");
+            scanf("%d", &ip);
+            if(ip == 1){
+                for (int i = 0; i < 5; i++) { 
+                scanf("%d", &out[i]);
+                sell += out[i];
+                remain[i] -= out[i];
+                }
+            }
+            if(ip == 2){
+                printf("상품ID: ");
+                scanf("%d",&id);
+                printf("판매수량: ");
+                scanf("%d",&n);
+                out[id-1] += n;
+                sell += n;
+                remain[id-1] -= n;
+            }
+            break;
+        case 3:
+            printf("재고 수량");
+            for(int i=0; i<5; i++) printf("%d ",remain[i]);
+            printf("\n총 판매량: %d (판매율 %.2f%%)", sell, ((double)sell/inven)*100);
+
+            for (int i = 1; i < 5; i++) {
+                if (out[i] > out[maxIdx]) maxIdx = i;
+                if (out[i] < out[minIdx]) minIdx = i;
+            }
+            printf("\n가장 많이 판매된 상품 : ID %d, 상품명: %s,판매량: %d\n", maxIdx + 1, str[maxIdx],out[maxIdx]);
+            printf("가장 적게 판매된 상품 : ID %d, 상품명: %s,판매량: %d\n", minIdx + 1, str[minIdx],out[minIdx]);
+
+            for (int i = 0; i < 5; i++) {
+                if (remain[i] <= 2) {
+                    printf("상품 ID %d : 상품명 : %s 재고부족(%d)\n", i + 1, remain[i]);
+                }   
+            }
+            break;
+        case 4:
+            for(int i=0; i<5; i++){
+                printf("ID %d 상품명: ",i+1);
+                scanf("%s",str[i]);
+                
+            }
+            break;
+        case 5:
+            printf("프로그램 종료");
+            break;
+
+        
+        default: printf("숫자가 잘못 입력되었습니다.\n");
+            break;
+        }
+
+    } while (num != 5);
+
+    return 0;
+}
