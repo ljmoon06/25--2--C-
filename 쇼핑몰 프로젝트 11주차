@@ -124,13 +124,16 @@ int main()
             saveProduct(products, 5);
             printf("상품 정보가 저장되었습니다.\n");
             break;
+        case 6:
+            printf("프로그램을 종료합니다.\n");
+            break;
 
         
         default: printf("숫자가 잘못 입력되었습니다.\n");
             break;
         }
 
-    } while (num != 5);
+    } while (num != 6);
 
     return 0;
 }
